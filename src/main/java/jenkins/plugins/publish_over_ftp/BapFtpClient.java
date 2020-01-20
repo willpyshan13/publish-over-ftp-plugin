@@ -25,17 +25,29 @@
 package jenkins.plugins.publish_over_ftp;
 
 import hudson.FilePath;
+import hudson.ProxyConfiguration;
+import jenkins.model.Jenkins;
 import jenkins.plugins.publish_over.BPBuildInfo;
 import jenkins.plugins.publish_over.BPDefaultClient;
 import jenkins.plugins.publish_over.BapPublisherException;
+import jenkins.plugins.publish_over_ftp.dingding.DingMessage;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPListParseEngine;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
 
@@ -45,9 +57,12 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
     private FTPClient ftpClient;
     private boolean disableMakeNestedDirs;
 
+    private DingMessage message;
+
     public BapFtpClient(final FTPClient ftpClient, final BPBuildInfo buildInfo) {
         this.ftpClient = ftpClient;
         this.buildInfo = buildInfo;
+        message = new DingMessage();
     }
 
     public void setDisableMakeNestedDirs(final boolean disableMakeNestedDirs) {
@@ -55,16 +70,26 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
     }
 
     public void setDisableRemoteVerification(final boolean disableRemoteVerification) {
-        if(disableRemoteVerification){
+        if (disableRemoteVerification) {
             ftpClient.setRemoteVerificationEnabled(false);
         }
     }
 
-    public FTPClient getFtpClient() { return ftpClient; }
-    public void setFtpClient(final FTPClient ftpClient) { this.ftpClient = ftpClient; }
+    public FTPClient getFtpClient() {
+        return ftpClient;
+    }
 
-    public BPBuildInfo getBuildInfo() { return buildInfo; }
-    public void setBuildInfo(final BPBuildInfo buildInfo) { this.buildInfo = buildInfo; }
+    public void setFtpClient(final FTPClient ftpClient) {
+        this.ftpClient = ftpClient;
+    }
+
+    public BPBuildInfo getBuildInfo() {
+        return buildInfo;
+    }
+
+    public void setBuildInfo(final BPBuildInfo buildInfo) {
+        this.buildInfo = buildInfo;
+    }
 
     public boolean changeDirectory(final String directory) {
         try {
@@ -90,8 +115,8 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
 
     private void delete() throws IOException {
         // use the extension if available
-        if(ftpClient.hasFeature("MLST")) {
-            for(FTPFile file : ftpClient.mlistDir()) {
+        if (ftpClient.hasFeature("MLST")) {
+            for (FTPFile file : ftpClient.mlistDir()) {
                 delete(file);
             }
         } else {
@@ -135,8 +160,18 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
     }
 
     public void transferFile(final BapFtpTransfer client, final FilePath filePath, final InputStream content) throws IOException {
-        if (!ftpClient.storeFile(filePath.getName(), content))
+        if (ftpClient.storeFile(filePath.getName(), content)) {
+            System.out.println("push success      ========" + filePath.getName());
+            if (buildInfo!=null) {
+                LOG.debug("push success      ========" + buildInfo.toString());
+            }
+            message.sendTextMessage(filePath.getName(), "8c3d195f059b1f1c4fdf9a55d59d69d6d8c3638431b5b16d32aa1970c163d28e","vvlife");
+            if (filePath.getName().endsWith(".html")) {
+                message.sendTextMessage(filePath.getName(), "8c3d195f059b1f1c4fdf9a55d59d69d6d8c3638431b5b16d32aa1970c163d28e","vvlife");
+            }
+        } else {
             throw new BapPublisherException(Messages.exception_failedToStoreFile(ftpClient.getReplyString()));
+        }
     }
 
     public void disconnect() {

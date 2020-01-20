@@ -35,7 +35,7 @@
     <artifactId>publish-over-ftp</artifactId>
     <packaging>hpi</packaging>
     <name>Publish Over FTP</name>
-    <version>1.16-SNAPSHOT</version>
+    <version>1.17-SNAPSHOT</version>
     <description>Send build artifacts over FTP</description>
     <url>http://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+FTP+Plugin</url>
 
@@ -117,6 +117,11 @@
             <version>2.5.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.12</version>
+        </dependency>
     </dependencies>
 
     <scm>
@@ -137,18 +142,22 @@
             <url>https://repo.jenkins-ci.org/releases</url>
         </repository>
     </distributionManagement>
-
+    
     <repositories>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
+            <url>https://repo.jenkins-ci.org/releases/</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
+            <url>https://repo.jenkins-ci.org/releases/</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
