@@ -42,19 +42,20 @@ public class BapFtpTransfer extends BPTransfer implements Describable<BapFtpTran
     private String dingToken;
     private String logoUrl;
     private String updateLog;
+    private String platformInfo;
     private String person;
     public BapFtpTransfer(final String sourceFiles, final String remoteDirectory, final String removePrefix,
-                          final String dingToken, final String logoUrl, final String updateLog,
+                          final String dingToken, final String logoUrl, final String updateLog,final String platformInfo,
                           final String dingPerson,final boolean asciiMode,
                           final boolean remoteDirectorySDF, final boolean flatten) {
-        this(sourceFiles, null, remoteDirectory, removePrefix,dingToken,logoUrl,updateLog,dingPerson,
+        this(sourceFiles, null, remoteDirectory, removePrefix,dingToken,logoUrl,updateLog,dingPerson,platformInfo,
                 asciiMode, remoteDirectorySDF, flatten, false, false, false, null);
     }
 
     @DataBoundConstructor
     public BapFtpTransfer(final String sourceFiles, final String excludes, final String remoteDirectory, final String removePrefix,
                           final String dingToken, final String logoUrl, final String updateLog,
-                          final String dingPerson,
+                          final String dingPerson,final String platformInfo,
                           final boolean asciiMode, final boolean remoteDirectorySDF, final boolean flatten, final boolean cleanRemote,
                           final boolean noDefaultExcludes, final boolean makeEmptyDirs, final String patternSeparator) {
         super(sourceFiles, excludes, remoteDirectory, removePrefix, remoteDirectorySDF, flatten, cleanRemote, noDefaultExcludes, makeEmptyDirs, patternSeparator);
@@ -94,6 +95,14 @@ public class BapFtpTransfer extends BPTransfer implements Describable<BapFtpTran
 
     public String getPerson() {
         return person;
+    }
+
+    public String getPlatformInfo() {
+        return platformInfo;
+    }
+
+    public void setPlatformInfo(String platformInfo) {
+        this.platformInfo = platformInfo;
     }
 
     public void setPerson(String person) {

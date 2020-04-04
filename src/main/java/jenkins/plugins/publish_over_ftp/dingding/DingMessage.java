@@ -48,22 +48,21 @@ public class DingMessage {
         return client;
     }
 
-    public void sendTextMessage(String msg, String token,String project) {
+    public void sendTextMessage(String version, String token, String updateLog, String dingPerson, String platform, String appToken) {
         api = apiUrl + token;
         HttpClient client = getHttpClient();
         PostMethod post = new PostMethod(api);
-
         JSONObject body = new JSONObject();
-        body.put("msgtype", "text");
+        body.put("msgtype", "markdown");
         body.put("isAtAll", false);
 
         JSONObject contentObject = new JSONObject();
         MessageMarkdown messageMarkdown = new MessageMarkdown();
-        messageMarkdown.content = "properties[0]" + "\n" +
-                "下载地址\nhttps://app.vvtechnology.cn:8024/dist/android/VVLife/html/" + msg + "\n"
-                + "版本：" + "properties[1]" + "\n"
+        messageMarkdown.content = "[" + platform + "]" + "\n" +
+                "下载地址\nhttps://app.vvtechnology.cn:8024/dist/android/VVLife/html/" + appToken + "\n"
+                + "版本：" + version + "\n"
                 + "时间：" + smf.format(System.currentTimeMillis()) + "\n" +
-                "更新内容：" + project;
+                "更新内容：" + updateLog;
 
         contentObject.put("content", messageMarkdown.content);
         body.put("text", contentObject);
@@ -89,7 +88,7 @@ public class DingMessage {
         post.releaseConnection();
     }
 
-    class MessageMarkdown{
+    class MessageMarkdown {
         String title;
         String content;
     }

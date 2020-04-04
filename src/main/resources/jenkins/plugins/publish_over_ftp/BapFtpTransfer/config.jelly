@@ -54,6 +54,9 @@
     <f:entry title="@人数" field="person">
             <f:textbox default="${defaults.transfer.person}"/>
      </f:entry>
+     <f:entry title="应用信息" field="platformInfo">
+                 <f:textbox default="${defaults.transfer.platformInfo}"/>
+     </f:entry>
     <f:description>
         <j:out value='${m.transfers_envVars(rootURL)}'/>
     </f:description>

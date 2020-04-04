@@ -161,13 +161,9 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
 
     public void transferFile(final BapFtpTransfer client, final FilePath filePath, final InputStream content) throws IOException {
         if (ftpClient.storeFile(filePath.getName(), content)) {
-            System.out.println("push success      ========" + filePath.getName());
-            if (buildInfo!=null) {
-                LOG.debug("push success      ========" + buildInfo.toString());
-            }
-            message.sendTextMessage(filePath.getName(), "8c3d195f059b1f1c4fdf9a55d59d69d6d8c3638431b5b16d32aa1970c163d28e","vvlife");
-            if (filePath.getName().endsWith(".html")) {
-                message.sendTextMessage(filePath.getName(), "8c3d195f059b1f1c4fdf9a55d59d69d6d8c3638431b5b16d32aa1970c163d28e","vvlife");
+            if (filePath.getName().endsWith(".apk") || filePath.getName().endsWith(".ipa")) {
+                String[] packageInfo = filePath.getName().split("_");
+                message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(),"");
             }
         } else {
             throw new BapPublisherException(Messages.exception_failedToStoreFile(ftpClient.getReplyString()));
