@@ -219,14 +219,14 @@ public class BapFtpClientTest {
     @Test public void testBeginTransfersAscii() throws Exception {
         expect(mockFTPClient.setFileType(FTP.ASCII_FILE_TYPE)).andReturn(true);
         mockControl.replay();
-        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", true, false, false));
+        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","", true, false, false));
         mockControl.verify();
     }
 
     @Test public void testBeginTransfersBinary() throws Exception {
         expect(mockFTPClient.setFileType(FTP.BINARY_FILE_TYPE)).andReturn(true);
         mockControl.replay();
-        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", false, false, false));
+        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","", false, false, false));
         mockControl.verify();
     }
 
@@ -236,7 +236,7 @@ public class BapFtpClientTest {
         expect(mockFTPClient.getReplyString()).andReturn(why);
         mockControl.replay();
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","", false, false, false));
             fail();
         } catch (BapPublisherException bpe) {
             assertTrue(bpe.getMessage().contains(why));
@@ -248,7 +248,7 @@ public class BapFtpClientTest {
         expect(mockFTPClient.setFileType(FTP.BINARY_FILE_TYPE)).andThrow(IO_EXCEPTION);
         mockControl.replay();
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","", false, false, false));
             fail();
         } catch (BapPublisherException bpe) {
             assertSame(IO_EXCEPTION, bpe.getCause());
@@ -260,7 +260,7 @@ public class BapFtpClientTest {
         expect(mockFTPClient.setFileType(FTP.BINARY_FILE_TYPE)).andThrow(RUNTIME_EXCEPTION);
         mockControl.replay();
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "","", "", "","",  false, false, false));
             fail();
         } catch (RuntimeException re) {
             assertSame(RUNTIME_EXCEPTION, re);
@@ -270,7 +270,7 @@ public class BapFtpClientTest {
 
     @Test public void testSetBeginTransfersFailIfNoSourceFiles() throws Exception {
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("", "", "", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("", "", "", "", "", "","", false, false, false));
             fail();
         } catch (BapPublisherException bpe) {
             assertEquals(Messages.exception_noSourceFiles(), bpe.getMessage());
