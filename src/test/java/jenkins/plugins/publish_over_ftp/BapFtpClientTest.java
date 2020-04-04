@@ -477,9 +477,9 @@ public class BapFtpClientTest {
     }
 
     private class TransferFileArgs {
-        private final BapFtpTransfer bapFtpTransfer = new BapFtpTransfer("", "", "", false, false, false);
+        private final BapFtpTransfer bapFtpTransfer = new BapFtpTransfer("", "", "","", "", "","", false, false, false);
         private final InputStream inputStream = mockControl.createMock(InputStream.class);
-        private final FilePath filePath = new FilePath(new File("myFile"));
+        private final FilePath filePath = new FilePath(new File("VVLife_V1.3.1_daily_xm_test_internal_2020-01-20_09_03.html"));
     }
 
 }

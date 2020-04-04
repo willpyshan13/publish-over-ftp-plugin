@@ -36,6 +36,10 @@ public class FtpOverrideTransferDefaults implements FtpTransferOptions, Describa
     private final String sourceFiles;
     private final String removePrefix;
     private final String remoteDirectory;
+    private final String dingToken;
+    private final String logoUrl;
+    private final String updateLog;
+    private final String person;
     private final String excludes;
     private final boolean remoteDirectorySDF;
     private final boolean flatten;
@@ -46,7 +50,9 @@ public class FtpOverrideTransferDefaults implements FtpTransferOptions, Describa
 
     @DataBoundConstructor
     public FtpOverrideTransferDefaults(final String sourceFiles, final String excludes, final String removePrefix,
-                                       final String remoteDirectory, final boolean flatten, boolean remoteDirectorySDF,
+                                       final String remoteDirectory,
+                                       final String dingToken, final String logoUrl, final String updateLog,
+                                       final String dingPerson,final boolean flatten, boolean remoteDirectorySDF,
                                        final boolean cleanRemote, final boolean asciiMode, final boolean noDefaultExcludes,
                                        final boolean makeEmptyDirs, final String patternSeparator) {
         this.asciiMode = asciiMode;
@@ -60,6 +66,11 @@ public class FtpOverrideTransferDefaults implements FtpTransferOptions, Describa
         this.noDefaultExcludes = noDefaultExcludes;
         this.makeEmptyDirs = makeEmptyDirs;
         this.patternSeparator = patternSeparator;
+
+        this.dingToken = dingToken;
+        this.logoUrl = logoUrl;
+        this.updateLog = updateLog;
+        this.person = dingPerson;
     }
 
     public String getSourceFiles() {
@@ -104,6 +115,22 @@ public class FtpOverrideTransferDefaults implements FtpTransferOptions, Describa
 
     public String getPatternSeparator() {
         return patternSeparator;
+    }
+
+    public String getDingToken() {
+        return dingToken;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public String getUpdateLog() {
+        return updateLog;
+    }
+
+    public String getPerson() {
+        return person;
     }
 
     public FtpOverrideTransferDefaultsDescriptor getDescriptor() {

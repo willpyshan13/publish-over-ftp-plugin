@@ -35,7 +35,7 @@
     <artifactId>publish-over-ftp</artifactId>
     <packaging>hpi</packaging>
     <name>Publish Over FTP</name>
-    <version>1.17-SNAPSHOT</version>
+    <version>1.19-SNAPSHOT</version>
     <description>Send build artifacts over FTP</description>
     <url>http://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+FTP+Plugin</url>
 
@@ -121,6 +121,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.main</groupId>
+            <artifactId>jenkins-test-harness-htmlunit</artifactId>
+            <version>2.31-2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -40,6 +40,20 @@
         <f:textbox default="${defaults.transfer.remoteDirectory}"/>
     </f:entry>
 
+    <f:entry title="钉钉token" field="dingToken">
+            <f:textbox default="${defaults.transfer.dingToken}"/>
+     </f:entry>
+
+     <f:entry title="logo地址" field="logoUrl">
+            <f:textbox default="${defaults.transfer.logoUrl}"/>
+     </f:entry>
+
+     <f:entry title="更新日志" field="updateLog">
+            <f:textbox default="${defaults.transfer.updateLog}"/>
+     </f:entry>
+    <f:entry title="@人数" field="person">
+            <f:textbox default="${defaults.transfer.person}"/>
+     </f:entry>
     <f:description>
         <j:out value='${m.transfers_envVars(rootURL)}'/>
     </f:description>

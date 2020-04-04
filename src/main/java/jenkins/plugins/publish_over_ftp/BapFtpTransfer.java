@@ -39,18 +39,65 @@ public class BapFtpTransfer extends BPTransfer implements Describable<BapFtpTran
     private static final long serialVersionUID = 1L;
 
     private boolean asciiMode;
-
-    public BapFtpTransfer(final String sourceFiles, final String remoteDirectory, final String removePrefix, final boolean asciiMode,
+    private String dingToken;
+    private String logoUrl;
+    private String updateLog;
+    private String person;
+    public BapFtpTransfer(final String sourceFiles, final String remoteDirectory, final String removePrefix,
+                          final String dingToken, final String logoUrl, final String updateLog,
+                          final String dingPerson,final boolean asciiMode,
                           final boolean remoteDirectorySDF, final boolean flatten) {
-        this(sourceFiles, null, remoteDirectory, removePrefix, asciiMode, remoteDirectorySDF, flatten, false, false, false, null);
+        this(sourceFiles, null, remoteDirectory, removePrefix,dingToken,logoUrl,updateLog,dingPerson,
+                asciiMode, remoteDirectorySDF, flatten, false, false, false, null);
     }
 
     @DataBoundConstructor
     public BapFtpTransfer(final String sourceFiles, final String excludes, final String remoteDirectory, final String removePrefix,
+                          final String dingToken, final String logoUrl, final String updateLog,
+                          final String dingPerson,
                           final boolean asciiMode, final boolean remoteDirectorySDF, final boolean flatten, final boolean cleanRemote,
                           final boolean noDefaultExcludes, final boolean makeEmptyDirs, final String patternSeparator) {
         super(sourceFiles, excludes, remoteDirectory, removePrefix, remoteDirectorySDF, flatten, cleanRemote, noDefaultExcludes, makeEmptyDirs, patternSeparator);
         this.asciiMode = asciiMode;
+        this.dingToken = dingToken;
+        if (this.dingToken.isEmpty()){
+            this.dingToken = "dddfffff";
+        }
+        this.logoUrl = logoUrl;
+        this.person = dingPerson;
+        this.updateLog = updateLog;
+    }
+
+    public String getDingToken() {
+        return dingToken;
+    }
+
+    public void setDingToken(String dingToken) {
+        this.dingToken = dingToken;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getUpdateLog() {
+        return updateLog;
+    }
+
+    public void setUpdateLog(String updateLog) {
+        this.updateLog = updateLog;
+    }
+
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person;
     }
 
     public boolean isAsciiMode() { return asciiMode; }

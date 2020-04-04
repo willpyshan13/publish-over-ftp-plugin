@@ -15,8 +15,12 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 
 public class DingMessage {
+
+    SimpleDateFormat smf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
     private static final Log logger = LogFactory.getLog(BapFtpClient.class);
 
     private static final String apiUrl = "https://oapi.dingtalk.com/robot/send?access_token=";
@@ -50,19 +54,22 @@ public class DingMessage {
         PostMethod post = new PostMethod(api);
 
         JSONObject body = new JSONObject();
-        body.put("msgtype", "markdown");
-        body.put("isAtAll", true);
+        body.put("msgtype", "text");
+        body.put("isAtAll", false);
 
         JSONObject contentObject = new JSONObject();
         MessageMarkdown messageMarkdown = new MessageMarkdown();
-        messageMarkdown.title = project;
-        messageMarkdown.content = "#### 下载地址[https://app.vvtechnology.cn:8024/dist/android/VVLife/html/"+msg+"](https://app.vvtechnology.cn:8024/dist/android/VVLife/html/"+msg+") ####";
+        messageMarkdown.content = "properties[0]" + "\n" +
+                "下载地址\nhttps://app.vvtechnology.cn:8024/dist/android/VVLife/html/" + msg + "\n"
+                + "版本：" + "properties[1]" + "\n"
+                + "时间：" + smf.format(System.currentTimeMillis()) + "\n" +
+                "更新内容：" + project;
 
-        contentObject.put("content", messageMarkdown);
+        contentObject.put("content", messageMarkdown.content);
         body.put("text", contentObject);
 
         JSONObject atObject = new JSONObject();
-        atObject.put("atMobiles", new JSONArray());
+        atObject.put("atMobiles", "15980957597");
         body.put("at", atObject);
 
         try {
