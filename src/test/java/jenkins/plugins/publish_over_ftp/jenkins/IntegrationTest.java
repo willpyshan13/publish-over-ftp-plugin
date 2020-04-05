@@ -75,7 +75,7 @@ public class IntegrationTest {
         };
         new JenkinsTestHelper().setGlobalConfig(testHostConfig);
         final String dirToIgnore = "target";
-        final BapFtpTransfer transfer = new BapFtpTransfer("**/*", null, "sub-home","", "", "","","", dirToIgnore, true, false, false, false, false, false, null);
+        final BapFtpTransfer transfer = new BapFtpTransfer("**/*", null, "sub-home","", "", "","","","", dirToIgnore, true, false, false, false, false, false, null);
         final ArrayList<BapFtpTransfer> transfers = new ArrayList<>(Collections.singletonList(transfer));
         final BapFtpPublisher publisher = new BapFtpPublisher(testHostConfig.getName(), false, transfers, false, false, null, null, null);
         final ArrayList<BapFtpPublisher> publishers = new ArrayList<>(Collections.singletonList(publisher));

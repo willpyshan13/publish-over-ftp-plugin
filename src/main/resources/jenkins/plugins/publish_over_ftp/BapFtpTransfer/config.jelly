@@ -39,7 +39,9 @@
     <f:entry title="${m.remoteDirectory()}" field="remoteDirectory">
         <f:textbox default="${defaults.transfer.remoteDirectory}"/>
     </f:entry>
-
+    <f:entry title="上传接口" field="uploadUrl">
+            <f:textbox default="${defaults.transfer.uploadUrl}"/>
+     </f:entry>
     <f:entry title="钉钉token" field="dingToken">
             <f:textbox default="${defaults.transfer.dingToken}"/>
      </f:entry>

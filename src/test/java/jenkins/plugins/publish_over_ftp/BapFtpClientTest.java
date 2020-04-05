@@ -219,14 +219,14 @@ public class BapFtpClientTest {
     @Test public void testBeginTransfersAscii() throws Exception {
         expect(mockFTPClient.setFileType(FTP.ASCII_FILE_TYPE)).andReturn(true);
         mockControl.replay();
-        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", true, false, false));
+        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", "",true, false, false));
         mockControl.verify();
     }
 
     @Test public void testBeginTransfersBinary() throws Exception {
         expect(mockFTPClient.setFileType(FTP.BINARY_FILE_TYPE)).andReturn(true);
         mockControl.replay();
-        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", false, false, false));
+        bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", "",false, false, false));
         mockControl.verify();
     }
 
@@ -236,7 +236,7 @@ public class BapFtpClientTest {
         expect(mockFTPClient.getReplyString()).andReturn(why);
         mockControl.replay();
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", "",false, false, false));
             fail();
         } catch (BapPublisherException bpe) {
             assertTrue(bpe.getMessage().contains(why));
@@ -248,7 +248,7 @@ public class BapFtpClientTest {
         expect(mockFTPClient.setFileType(FTP.BINARY_FILE_TYPE)).andThrow(IO_EXCEPTION);
         mockControl.replay();
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "", "", "", "","","", "",false, false, false));
             fail();
         } catch (BapPublisherException bpe) {
             assertSame(IO_EXCEPTION, bpe.getCause());
@@ -260,7 +260,7 @@ public class BapFtpClientTest {
         expect(mockFTPClient.setFileType(FTP.BINARY_FILE_TYPE)).andThrow(RUNTIME_EXCEPTION);
         mockControl.replay();
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "","", "", "","", "", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("*", "", "","", "", "","", "","", false, false, false));
             fail();
         } catch (RuntimeException re) {
             assertSame(RUNTIME_EXCEPTION, re);
@@ -270,7 +270,7 @@ public class BapFtpClientTest {
 
     @Test public void testSetBeginTransfersFailIfNoSourceFiles() throws Exception {
         try {
-            bapFtpClient.beginTransfers(new BapFtpTransfer("", "", "", "", "", "","","", false, false, false));
+            bapFtpClient.beginTransfers(new BapFtpTransfer("", "", "", "", "", "","","","", false, false, false));
             fail();
         } catch (BapPublisherException bpe) {
             assertEquals(Messages.exception_noSourceFiles(), bpe.getMessage());
@@ -478,7 +478,7 @@ public class BapFtpClientTest {
 
     private class TransferFileArgs {
         private final BapFtpTransfer bapFtpTransfer = new BapFtpTransfer("", "", "","8c3d195f059b1f1c4fdf9a55d59d69d6d8c3638431b5b16d32aa1970c163d28e", "https://app.vvtechnology.cn:8024/resource/VVLife.png",
-                "android update","android test","15980957597,15099660443", false, false, false);
+                "android update","android test","15980957597,15099660443","http://localhost:8081/renren-api/app/upload", false, false, false);
         private final InputStream inputStream = mockControl.createMock(InputStream.class);
         private final FilePath filePath = new FilePath(new File("Life_V1.3.1_daily_xm-test-internal_2020-01-20_09_03.apk"));
     }

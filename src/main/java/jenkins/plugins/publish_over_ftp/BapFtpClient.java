@@ -31,6 +31,7 @@ import jenkins.plugins.publish_over.BPBuildInfo;
 import jenkins.plugins.publish_over.BPDefaultClient;
 import jenkins.plugins.publish_over.BapPublisherException;
 import jenkins.plugins.publish_over_ftp.dingding.DingMessage;
+import jenkins.plugins.publish_over_ftp.upload.UploadUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.httpclient.HttpClient;
@@ -163,7 +164,10 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
         if (ftpClient.storeFile(filePath.getName(), content)) {
             if (filePath.getName().endsWith(".apk") || filePath.getName().endsWith(".ipa")) {
                 String[] packageInfo = filePath.getName().split("_");
-                message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(),"kjkjjkkj");
+                //先上传到应用平台获取token
+                String token = UploadUtils.uploadInfo(client.getUploadUrl(), packageInfo[0], packageInfo[1], "1", client.getLogoUrl(), packageInfo[4], packageInfo[0], client.getUploadUrl(), client.getUpdateLog());
+                //再发送消息到钉钉
+                message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(), token);
             }
         } else {
             throw new BapPublisherException(Messages.exception_failedToStoreFile(ftpClient.getReplyString()));

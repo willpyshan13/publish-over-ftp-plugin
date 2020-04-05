@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import hudson.ProxyConfiguration;
 import jenkins.model.Jenkins;
 import jenkins.plugins.publish_over_ftp.BapFtpClient;
+import jenkins.plugins.publish_over_ftp.utils.HttpUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -29,27 +30,6 @@ public class DingMessage {
 
     private String api;
 
-
-    private HttpClient getHttpClient() {
-        HttpClient client = new HttpClient();
-        Jenkins jenkins = Jenkins.getInstance();
-        if (jenkins != null && jenkins.proxy != null) {
-            ProxyConfiguration proxy = jenkins.proxy;
-            if (proxy != null && client.getHostConfiguration() != null) {
-                client.getHostConfiguration().setProxy(proxy.name, proxy.port);
-                String username = proxy.getUserName();
-                String password = proxy.getPassword();
-                // Consider it to be passed if username specified. Sufficient?
-                if (username != null && !"".equals(username.trim())) {
-                    logger.info("Using proxy authentication (user=" + username + ")");
-                    client.getState().setProxyCredentials(AuthScope.ANY,
-                            new UsernamePasswordCredentials(username, password));
-                }
-            }
-        }
-        return client;
-    }
-
     /**
      * 发送钉钉消息
      * @param version
@@ -61,7 +41,6 @@ public class DingMessage {
      */
     public void sendTextMessage(String version, String token, String updateLog, String dingPerson, String platform, String appToken) {
         api = apiUrl + token;
-        HttpClient client = getHttpClient();
         PostMethod post = new PostMethod(api);
         JSONObject body = new JSONObject();
         body.put("msgtype", "markdown");
@@ -91,7 +70,7 @@ public class DingMessage {
             logger.error("build request error", e);
         }
         try {
-            client.executeMethod(post);
+            HttpUtils.getHttpClient().executeMethod(post);
             logger.info(post.getResponseBodyAsString());
         } catch (IOException e) {
             System.out.println("send msg error      ========" + e);
