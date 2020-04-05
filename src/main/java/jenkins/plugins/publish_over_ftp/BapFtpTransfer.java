@@ -67,6 +67,7 @@ public class BapFtpTransfer extends BPTransfer implements Describable<BapFtpTran
         this.logoUrl = logoUrl;
         this.person = dingPerson;
         this.updateLog = updateLog;
+        this.platformInfo = platformInfo;
     }
 
     public String getDingToken() {

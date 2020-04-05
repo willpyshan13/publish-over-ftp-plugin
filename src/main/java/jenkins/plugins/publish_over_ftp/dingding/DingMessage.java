@@ -16,6 +16,8 @@ import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DingMessage {
 
@@ -48,6 +50,15 @@ public class DingMessage {
         return client;
     }
 
+    /**
+     * 发送钉钉消息
+     * @param version
+     * @param token
+     * @param updateLog
+     * @param dingPerson
+     * @param platform
+     * @param appToken
+     */
     public void sendTextMessage(String version, String token, String updateLog, String dingPerson, String platform, String appToken) {
         api = apiUrl + token;
         HttpClient client = getHttpClient();
@@ -67,9 +78,10 @@ public class DingMessage {
         contentObject.put("content", messageMarkdown.content);
         body.put("text", contentObject);
 
-        JSONObject atObject = new JSONObject();
-        atObject.put("atMobiles", "15980957597");
-        body.put("at", atObject);
+        String[] persons = dingPerson.split(",");
+        Map<String,Object> at = new HashMap<>();
+        at.put("atMobiles", persons);
+        body.put("at", at);
 
         try {
             post.setRequestEntity(new StringRequestEntity(body.toJSONString(), "application/json", "UTF-8"));

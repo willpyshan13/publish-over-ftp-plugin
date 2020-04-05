@@ -163,7 +163,7 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
         if (ftpClient.storeFile(filePath.getName(), content)) {
             if (filePath.getName().endsWith(".apk") || filePath.getName().endsWith(".ipa")) {
                 String[] packageInfo = filePath.getName().split("_");
-                message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(),"");
+                message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(),"kjkjjkkj");
             }
         } else {
             throw new BapPublisherException(Messages.exception_failedToStoreFile(ftpClient.getReplyString()));
