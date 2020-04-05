@@ -49,7 +49,7 @@ public class DingMessage {
         JSONObject contentObject = new JSONObject();
         MessageMarkdown messageMarkdown = new MessageMarkdown();
         messageMarkdown.content = "[" + platform + "]" + "\n" +
-                "下载地址\nhttps://app.vvtechnology.cn:8024/dist/android/VVLife/html/" + appToken + "\n"
+                "下载地址\nhttps://app.vvtechnology.cn:8024/dist/android/download/download.html?token=" + appToken + "\n"
                 + "版本：" + version + "\n"
                 + "时间：" + smf.format(System.currentTimeMillis()) + "\n" +
                 "更新内容：" + updateLog;
