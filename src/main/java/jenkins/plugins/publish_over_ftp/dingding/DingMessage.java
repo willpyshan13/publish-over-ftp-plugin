@@ -57,10 +57,17 @@ public class DingMessage {
         contentObject.put("content", messageMarkdown.content);
         body.put("text", contentObject);
 
-        String[] persons = dingPerson.split(",");
-        Map<String,Object> at = new HashMap<>();
-        at.put("atMobiles", persons);
-        body.put("at", at);
+        if (dingPerson.contains(",")) {
+            String[] persons = dingPerson.split(",");
+            Map<String, Object> at = new HashMap<>();
+            at.put("atMobiles", persons);
+            body.put("at", at);
+        }else if(!dingPerson.isEmpty()){
+            String[] persons = dingPerson.split(",");
+            Map<String, Object> at = new HashMap<>();
+            at.put("atMobiles", dingPerson);
+            body.put("at", at);
+        }
 
         try {
             post.setRequestEntity(new StringRequestEntity(body.toJSONString(), "application/json", "UTF-8"));

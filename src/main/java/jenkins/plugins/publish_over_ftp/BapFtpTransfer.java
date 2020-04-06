@@ -47,16 +47,16 @@ public class BapFtpTransfer extends BPTransfer implements Describable<BapFtpTran
     private String person;
     public BapFtpTransfer(final String sourceFiles, final String remoteDirectory, final String removePrefix,
                           final String dingToken, final String logoUrl, final String updateLog,final String platformInfo,
-                          final String dingPerson,final String uploadUrl,final boolean asciiMode,
+                          final String person,final String uploadUrl,final boolean asciiMode,
                           final boolean remoteDirectorySDF, final boolean flatten) {
-        this(sourceFiles, null, remoteDirectory, removePrefix,dingToken,logoUrl,updateLog,dingPerson,platformInfo,uploadUrl,
+        this(sourceFiles, null, remoteDirectory, removePrefix,dingToken,logoUrl,updateLog,person,platformInfo,uploadUrl,
                 asciiMode, remoteDirectorySDF, flatten, false, false, false, null);
     }
 
     @DataBoundConstructor
     public BapFtpTransfer(final String sourceFiles, final String excludes, final String remoteDirectory, final String removePrefix,
                           final String dingToken, final String logoUrl, final String updateLog,
-                          final String dingPerson,final String platformInfo,final String uploadUrl,
+                          final String person,final String platformInfo,final String uploadUrl,
                           final boolean asciiMode, final boolean remoteDirectorySDF, final boolean flatten, final boolean cleanRemote,
                           final boolean noDefaultExcludes, final boolean makeEmptyDirs, final String patternSeparator) {
         super(sourceFiles, excludes, remoteDirectory, removePrefix, remoteDirectorySDF, flatten, cleanRemote, noDefaultExcludes, makeEmptyDirs, patternSeparator);
@@ -66,7 +66,7 @@ public class BapFtpTransfer extends BPTransfer implements Describable<BapFtpTran
             this.dingToken = "dddfffff";
         }
         this.logoUrl = logoUrl;
-        this.person = dingPerson;
+        this.person = person;
         this.updateLog = updateLog;
         this.platformInfo = platformInfo;
         this.uploadUrl = uploadUrl;
