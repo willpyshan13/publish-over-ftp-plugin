@@ -164,10 +164,13 @@ public class BapFtpClient extends BPDefaultClient<BapFtpTransfer> {
         if (ftpClient.storeFile(filePath.getName(), content)) {
             if (filePath.getName().endsWith(".apk") || filePath.getName().endsWith(".ipa")) {
                 String[] packageInfo = filePath.getName().split("_");
+                String clientId = filePath.getName().endsWith(".apk") ? "1" : "2";
                 //先上传到应用平台获取token
-                String token = UploadUtils.uploadInfo(client.getUploadUrl(), packageInfo[0], packageInfo[1], "1", client.getLogoUrl(), packageInfo[4], packageInfo[0], client.getUploadUrl(), client.getUpdateLog());
-                //再发送消息到钉钉
-                message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(), token);
+                if (packageInfo.length > 5) {
+                    String token = UploadUtils.uploadInfo(client.getUploadUrl(), packageInfo[0], packageInfo[1], clientId, client.getLogoUrl(), packageInfo[4], packageInfo[0], "", client.getUpdateLog());
+                    //再发送消息到钉钉
+                    message.sendTextMessage(packageInfo[1], client.getDingToken(), client.getUpdateLog(), client.getPerson(), client.getPlatformInfo(), token);
+                }
             }
         } else {
             throw new BapPublisherException(Messages.exception_failedToStoreFile(ftpClient.getReplyString()));

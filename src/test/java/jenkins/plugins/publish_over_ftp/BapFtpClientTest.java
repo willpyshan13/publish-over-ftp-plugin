@@ -478,9 +478,9 @@ public class BapFtpClientTest {
 
     private class TransferFileArgs {
         private final BapFtpTransfer bapFtpTransfer = new BapFtpTransfer("", "", "","8c3d195f059b1f1c4fdf9a55d59d69d6d8c3638431b5b16d32aa1970c163d28e", "https://app.vvtechnology.cn:8024/resource/VVLife.png",
-                "android update","android test","15980957597,15099660443","http://localhost:8081/renren-api/app/upload", false, false, false);
+                "android update","android test","15980957597,15099660443","http://172.16.6.241/platform/app/upload", false, false, false);
         private final InputStream inputStream = mockControl.createMock(InputStream.class);
-        private final FilePath filePath = new FilePath(new File("Life_V1.3.1_daily_xm-test-internal_2020-01-20_09_03.apk"));
+        private final FilePath filePath = new FilePath(new File("VVLife-V1.4.0_2020-04-06_09_51-product-release.apk"));
     }
 
 }
